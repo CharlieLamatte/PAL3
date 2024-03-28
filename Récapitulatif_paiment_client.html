@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Récapitulatif et Paiement</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="Logo_2.jpg" height="70" alt="Logo"> 
+            </div>
+            <div class="go-muscu">GO MUSCU</div>
+            <div class="cta">
+                <a href="Homepage.html" class="btn">Accueil</a>
+                <a href="Inscription.html" class="btn">Inscription</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <h2>Récapitulatif de vos choix</h2>
+        <div>
+            <p>Poids : <span id="poids_recap"></span> kg</p>
+            <p>Taille : <span id="taille_recap"></span> cm</p>
+            <p>Niveau : <span id="niveau_recap"></span></p>
+            <p>Objectif : <span id="objectif_recap"></span></p>
+            <p>Temps libre : <span id="temps_libre_recap"></span> heures</p>
+            <p>Nombre de séances par semaine : <span id="seances_recap"></span></p>
+        </div>
+    </div>
+    <div class="wrapper">
+        <h2>Paiement</h2>
+        <form id="payment_form" action="traitement_paiement.php" method="post">
+            <label for="card-number">Numéro de carte :</label><br>
+            <input type="text" id="card-number" name="card-number" required><br>
+
+            <label for="card-holder">Nom du titulaire :</label><br>
+            <input type="text" id="card-holder" name="card-holder" required><br>
+
+            <label for="expiry-date">Date d'expiration :</label><br>
+            <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required><br>
+
+            <label for="cvv">CVV :</label><br>
+            <input type="text" id="cvv" name="cvv" required><br>
+
+            <label for="price">Prix :</label><br>
+            <input type="text" id="price" name="price" readonly><br><br>
+
+            <input type="submit" value="Payer" class="btn">
+        </form>
+    </div>
+
+    <script>
+        // Récupérer les données du formulaire et les afficher dans le récapitulatif
+        document.getElementById("form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêcher l'envoi du formulaire
+            
+            // Récupérer les valeurs des champs du formulaire
+            var poids = document.getElementById("poids").value;
+            var taille = document.getElementById("taille").value;
+            var niveau = document.getElementById("niveau").value;
+            var objectif = document.getElementById("objectif").value;
+            var temps_libre = document.getElementById("temps-libre").value;
+            var seances = document.getElementById("seances").value;
+            
+            // Afficher les valeurs dans le récapitulatif
+            document.getElementById("poids_recap").textContent = poids;
+            document.getElementById("taille_recap").textContent = taille;
+            document.getElementById("niveau_recap").textContent = niveau;
+            document.getElementById("objectif_recap").textContent = objectif;
+            document.getElementById("temps_libre_recap").textContent = temps_libre;
+            document.getElementById("seances_recap").textContent = seances;
+            
+            // Calculer le prix en fonction du nombre d'heures
+            var prixParHeure = 5; // Prix par heure en euros
+            var prixTotal = temps_libre * prixParHeure;
+            document.getElementById("price").value = prixTotal.toFixed(2) + "€"; // Afficher le prix avec 2 décimales
+            // Afficher le récapitulatif et le formulaire de paiement
+            document.getElementById("wrapper").style.display = "block";
+            document.getElementById("payment_form").style.display = "block";
+        });
+    </script>
+</body>
+</html>
